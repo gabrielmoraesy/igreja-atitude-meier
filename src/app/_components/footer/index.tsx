@@ -87,11 +87,11 @@ export function Footer() {
                   <Instagram className="w-6 h-6" />
                 </a>
                 <a
-                  href="https://www.google.com/maps/place/Igreja+Batista+Atitude+M%C3%A9ier/@-22.902395,-43.277205,15z/data=!4m15!1m8!3m7!1s0x997dba16991065:0x4257c558d70f9f0!2sR.+Arquias+Cordeiro,+302+-+M%C3%A9ier,+Rio+de+Janeiro+-+RJ,+20770-001,+Brasil!3b1!8m2!3d-22.9023947!4d-43.2772054!16s%2Fg%2F11y2lsh5pv!3m5!1s0x997d005a96add7:0x8891309393ee2eab!8m2!3d-22.9022541!4d-43.277076!16s%2Fg%2F11y29y553c?hl=pt-BR&entry=ttu&g_ep=EgoyMDI1MDYxNy4wIKXMDSoASAFQAw%3D%3D"
+                  href="https://www.openstreetmap.org/?mlat=-22.9024&mlon=-43.2771#map=15/-22.9024/-43.2771"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-foreground/80 hover:text-foreground"
-                  aria-label="Localização no Google Maps"
+                  aria-label="Localização no OpenStreetMap"
                 >
                   <MapPin className="w-6 h-6" />
                 </a>
