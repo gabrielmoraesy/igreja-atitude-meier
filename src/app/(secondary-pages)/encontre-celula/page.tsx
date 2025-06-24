@@ -1,7 +1,8 @@
 'use client'
 
+import { MapPin } from 'lucide-react';
+import Image from 'next/image';
 import { useState } from 'react';
-import { MapPin, Car } from 'lucide-react';
 
 const CELULAS = [
   {
@@ -68,7 +69,7 @@ const IGREJA_COORDS = { lat: -22.9024, lng: -43.2771 };
 
 // Função para gerar URL do OpenStreetMap
 const getOpenStreetMapUrl = (lat: number, lng: number) => {
-  const bbox = `${lng-0.01},${lat-0.01},${lng+0.01},${lat+0.01}`;
+  const bbox = `${lng - 0.01},${lat - 0.01},${lng + 0.01},${lat + 0.01}`;
   return `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${lat},${lng}`;
 };
 
@@ -83,12 +84,12 @@ const getUberUrl = (endereco: string, lat: number, lng: number, nome: string) =>
 export default function EncontreCelulaPage() {
   const [bairro, setBairro] = useState('');
   const [celulaSelecionada, setCelulaSelecionada] = useState<number | null>(null);
-  
+
   const celulasFiltradas = bairro ? CELULAS.filter(c => c.bairro === bairro) : [];
 
   // Determinar coordenadas para o mapa
   let mapCoords = IGREJA_COORDS;
-    
+
   if (celulaSelecionada !== null) {
     // Se uma célula específica foi clicada, usa suas coordenadas
     const celula = CELULAS[celulaSelecionada];
@@ -96,15 +97,15 @@ export default function EncontreCelulaPage() {
   } else if (bairro && celulasFiltradas.length > 0) {
     // Se um bairro foi selecionado mas nenhuma célula específica foi clicada, usa a primeira célula
     mapCoords = { lat: celulasFiltradas[0].lat, lng: celulasFiltradas[0].lng };
-  } 
+  }
 
   const mapUrl = getOpenStreetMapUrl(mapCoords.lat, mapCoords.lng);
 
   const handleCelulaClick = (celula: typeof CELULAS[0]) => {
     // Encontrar o índice da célula no array principal
-    const index = CELULAS.findIndex(c => 
-      c.nome === celula.nome && 
-      c.endereco === celula.endereco && 
+    const index = CELULAS.findIndex(c =>
+      c.nome === celula.nome &&
+      c.endereco === celula.endereco &&
       c.bairro === celula.bairro
     );
 
@@ -150,25 +151,24 @@ export default function EncontreCelulaPage() {
                       const msg = encodeURIComponent(`Olá, tenho interesse em participar da célula ${c.nome}, no endereço ${c.endereco}, ${c.dia} às ${c.horario}, do líder ${c.lider}.`);
                       const whatsappUrl = `https://wa.me/55${numero}?text=${msg}`;
                       const uberUrl = getUberUrl(c.endereco, c.lat, c.lng, c.nome);
-                      const isSelected = celulaSelecionada === CELULAS.findIndex(celula => 
-                        celula.nome === c.nome && 
-                        celula.endereco === c.endereco && 
+                      const isSelected = celulaSelecionada === CELULAS.findIndex(celula =>
+                        celula.nome === c.nome &&
+                        celula.endereco === c.endereco &&
                         celula.bairro === c.bairro
                       );
-                      
+
                       return (
-                        <div 
-                          key={i} 
-                          className={`border rounded-lg p-4 cursor-pointer transition-all duration-300 ${
-                            isSelected 
-                              ? 'border-[#ff8800] bg-[#fff8f0] shadow-lg' 
+                        <div
+                          key={i}
+                          className={`border rounded-lg p-4 cursor-pointer transition-all duration-300 ${isSelected
+                              ? 'border-[#ff8800] bg-[#fff8f0] shadow-lg'
                               : 'border-[#ff8800] bg-[#fff8f0] hover:bg-[#fff4e6] hover:border-[#e67700] hover:shadow-md'
-                          }`}
+                            }`}
                           onClick={() => handleCelulaClick(c)}
                         >
                           <div className="flex items-center justify-between mb-2">
                             <h2 className="text-xl font-bold text-[#ff8800]">{c.nome}</h2>
-                            <div className="flex gap-2">
+                            <div className="flex gap-0.5">
                               <button
                                 onClick={(e) => {
                                   e.stopPropagation();
@@ -177,7 +177,7 @@ export default function EncontreCelulaPage() {
                                 className="p-2 text-[#ff8800] hover:text-[#e67700] transition-colors"
                                 title="Ver no mapa"
                               >
-                                <MapPin className="w-5 h-5" />
+                                <MapPin className="w-6 h-6" />
                               </button>
                               <a
                                 href={uberUrl}
@@ -187,7 +187,13 @@ export default function EncontreCelulaPage() {
                                 className="p-2 text-black hover:text-gray-700 transition-colors"
                                 title="Pedir Uber"
                               >
-                                <Car className="w-5 h-5" />
+                                <Image
+                                  src="/images/logos/logo-uber.png"
+                                  height={32}
+                                  width={32}
+                                  alt='Logo do uber'
+                                  className="w-8 h-8 rounded-lg"
+                                 />
                               </a>
                             </div>
                           </div>
