@@ -73,10 +73,12 @@ const getOpenStreetMapUrl = (lat: number, lng: number) => {
 };
 
 // Função para gerar URL do Uber
-const getUberUrl = (endereco: string) => {
+const getUberUrl = (endereco: string, lat: number, lng: number, nome: string) => {
   const enderecoEncoded = encodeURIComponent(endereco + ', Rio de Janeiro, RJ');
-  return `https://m.uber.com/ul/?action=setPickup&pickup=my_location&dropoff[formatted_address]=${enderecoEncoded}&dropoff[latitude]=${lat}&dropoff[longitude]=${lng}`;
+  const nomeEncoded = encodeURIComponent(nome);
+  return `https://m.uber.com/ul/?action=setPickup&pickup=my_location&dropoff[nickname]=${nomeEncoded}&dropoff[formatted_address]=${enderecoEncoded}&dropoff[latitude]=${lat}&dropoff[longitude]=${lng}`;
 };
+
 
 export default function EncontreCelulaPage() {
   const [bairro, setBairro] = useState('');
@@ -86,26 +88,17 @@ export default function EncontreCelulaPage() {
 
   // Determinar coordenadas para o mapa
   let mapCoords = IGREJA_COORDS;
-  
-  console.log("Debug - celulaSelecionada:", celulaSelecionada);
-  console.log("Debug - bairro:", bairro);
-  console.log("Debug - celulasFiltradas.length:", celulasFiltradas.length);
-  
+    
   if (celulaSelecionada !== null) {
     // Se uma célula específica foi clicada, usa suas coordenadas
     const celula = CELULAS[celulaSelecionada];
     mapCoords = { lat: celula.lat, lng: celula.lng };
-    console.log("Célula selecionada:", celula.nome, "Endereço:", celula.endereco, "Coords:", mapCoords);
   } else if (bairro && celulasFiltradas.length > 0) {
     // Se um bairro foi selecionado mas nenhuma célula específica foi clicada, usa a primeira célula
     mapCoords = { lat: celulasFiltradas[0].lat, lng: celulasFiltradas[0].lng };
-    console.log("Primeira célula do bairro:", celulasFiltradas[0].nome, "Coords:", mapCoords);
-  } else {
-    console.log("Mostrando igreja, coords:", mapCoords);
-  }
+  } 
 
   const mapUrl = getOpenStreetMapUrl(mapCoords.lat, mapCoords.lng);
-  console.log("Debug - mapUrl final:", mapUrl);
 
   const handleCelulaClick = (celula: typeof CELULAS[0]) => {
     // Encontrar o índice da célula no array principal
@@ -114,7 +107,7 @@ export default function EncontreCelulaPage() {
       c.endereco === celula.endereco && 
       c.bairro === celula.bairro
     );
-    console.log("Debug - handleCelulaClick - celula:", celula.nome, "index encontrado:", index);
+
     setCelulaSelecionada(index);
   };
 
@@ -156,7 +149,7 @@ export default function EncontreCelulaPage() {
                       const numero = c.whatsapp || '21964277805';
                       const msg = encodeURIComponent(`Olá, tenho interesse em participar da célula ${c.nome}, no endereço ${c.endereco}, ${c.dia} às ${c.horario}, do líder ${c.lider}.`);
                       const whatsappUrl = `https://wa.me/55${numero}?text=${msg}`;
-                      const uberUrl = `https://m.uber.com/ul/?action=setPickup&pickup=my_location&dropoff[formatted_address]=${encodeURIComponent(c.endereco + ', Rio de Janeiro, RJ')}&dropoff[latitude]=${c.lat}&dropoff[longitude]=${c.lng}`;
+                      const uberUrl = getUberUrl(c.endereco, c.lat, c.lng, c.nome);
                       const isSelected = celulaSelecionada === CELULAS.findIndex(celula => 
                         celula.nome === c.nome && 
                         celula.endereco === c.endereco && 
