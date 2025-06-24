@@ -3,8 +3,9 @@ import { DM_Sans } from "next/font/google";
 import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/navigation";
-import { ClientLayout } from "./client-layout";
 import "./globals.css";
+import { Header } from "./_components/header";
+import { Footer } from "./_components/footer";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -25,9 +26,9 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className={`${dmSans.variable} font-sans bg-background antialiased`} suppressHydrationWarning>
       <body className={`${dmSans.variable} font-sans bg-background antialiased`}>
-        <ClientLayout>
+        <Header />
           {children}
-        </ClientLayout>
+        <Footer /> 
       </body>
     </html>
   );

@@ -26,7 +26,7 @@ export default function EncontreCelulaPage() {
 
   return (
     <>
-      <div className="min-h-screen bg-[#f4efea] py-16 px-4">
+      <div className="min-h-screen bg-[#f4efea] py-16 px-4 mt-16 sm:mt-24">
         <div className="max-w-[1200px] mx-auto">
           <h1 className="text-3xl font-bold mb-8 text-[#ff8800] text-center">Encontre uma célula perto de você</h1>
 

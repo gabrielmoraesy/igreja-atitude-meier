@@ -6,7 +6,7 @@ import { SectionFindCell } from "@/components/Sections/SectionFindCell";
 export default function Home() {
   return (
     <>
-      <HeroCarousel />
+      <HeroCarousel />      
       <SectionFindCell />
     </>
   );

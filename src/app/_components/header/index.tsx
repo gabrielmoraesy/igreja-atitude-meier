@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { DropdownMenu } from "../../../components/ui/dropdown-menu";
 import { MobileMenu } from "./mobile-menu";
 
@@ -30,11 +31,12 @@ const ministries = [
   },
 ];
 
-interface HeaderProps {
-  backgroundFixed?: boolean
-}
-export function Header({ backgroundFixed = false }: HeaderProps) {
+export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const pathname = usePathname();
+  
+  const isHome = pathname === '/';
+  const backgroundFixed = !isHome;
 
   useEffect(() => {
     if (backgroundFixed) return;
