@@ -65,7 +65,7 @@ export function Header() {
       <div className="container max-w-[1200px] mx-auto flex items-center justify-between h-24 px-4">
         <Link href="/" className="relative w-32">
           <Image
-            src="/logo-preta.png"
+            src="/images/logos/logo-preta.png"
             alt="Igreja Batista Atitude Méier"
             className="object-contain"
             priority

@@ -10,8 +10,8 @@ export function Footer() {
           <div className="md:col-span-2">
             <div className="flex items-center gap-2 mb-4">
               <Image
-                src="/images/logos/logo-branca.png"
-                alt="Logo IBAM"
+                src="/images/logos/logo-preta.png"
+                alt="Igreja Batista Atitude Méier"
                 width={56}
                 height={56}
                 className="object-contain"
